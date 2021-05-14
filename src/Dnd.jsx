@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { finalSpaceCharacters } from './initial-data';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useHistory } from 'react-router-dom';
+import './style.scss';
 
 const DND = () => {
   const [characters, updateCharacters] = useState(finalSpaceCharacters);
@@ -19,6 +20,7 @@ const DND = () => {
 
   return (
     <div className="App">
+      <a onClick={() => history.push("/")}>BACK</a>
       <header className="App-header">
         <h1>Final Space Characters</h1>
         <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -47,7 +49,6 @@ const DND = () => {
           </Droppable>
         </DragDropContext>
       </header>
-      <a onClick={() => history.push("/")}>BACK</a>
     </div>
   );
 }

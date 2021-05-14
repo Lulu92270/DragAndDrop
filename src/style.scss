@@ -73,14 +73,22 @@ code {
   margin: 0;
 }
 
+.parent {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 15px;
+}
 .characters-thumb {
   overflow: hidden;
+  margin: 15px;
   flex-shrink: 0;
   width: 2em;
   height: 2em;
   background-color: #e8e8e8;
   padding: .5em;
   margin-right: .5em;
+  width: calc(25% - .5em);
+  height: 300px;
 }
 
 .characters-thumb img {

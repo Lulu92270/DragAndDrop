@@ -66,13 +66,19 @@ const App = () => {
           className="inner-div"
           onClick={() => history.push("/example1")}
         >
-          Example 1
+          DND
         </div>
         <div 
           className="inner-div"
           onClick={() => history.push("/example2")}
         >
-          Example 2
+          VertAndHori
+        </div>
+        <div 
+          className="inner-div"
+          onClick={() => history.push("/grid")}
+        >
+          Grid
         </div>
       </div>
       <DragDropContext onDragEnd={handleOnDragEnd}>

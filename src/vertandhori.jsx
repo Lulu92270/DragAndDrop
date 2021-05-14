@@ -1,85 +1,47 @@
 import React, { useState } from 'react';
-import { initialData } from './initial-data';
-import Task from './task';
-import styled from 'styled-components';
+import { finalSpaceCharacters } from './initial-data';
 import '@atlaskit/css-reset';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useHistory } from 'react-router-dom';
-
-const Container = styled.div`
-  display: flex;
-`;
-const TaskList = styled.div`
-  padding: 8px;
-  flex-grow: 1;
-  min-height: 100px;
-`;
+import './style.scss';
 
 const VertiAndHori = () => {
+  const [characters, updateCharacters] = useState(finalSpaceCharacters);
   const history = useHistory();
-  const data = initialData
-  const [count, setCount] = useState(0)
-  const tasks = data.tasks
 
   function handleOnDragEnd(result) {
-    const { destination, source, draggableId, type } = result;
-    if(!destination) {
-      return;
-    }
-    if(// The user drag the item at the same position to where it was
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
+    if (!result.destination) return;
 
-    if(type === 'column') {
-      const newColumnOrder = Array.from(data.columnOrder)
-      newColumnOrder.splice(source.index, 1);
-      newColumnOrder.splice(destination.index, 0, draggableId);
+    const items = Array.from(characters);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
 
-      data.columnOrder = newColumnOrder;
-      setCount(count => count + 1)
-      return;
-    }
-
-    const start = data.columns.find(column => column.id === source.droppableId)
-    const finish = data.columns.find(column => column.id === destination.droppableId)
-
-    if(start === finish) { // If the task is moved into the same column
-      const newTaskIds = Array.from(start.taskIds);
-      newTaskIds.splice(source.index, 1);
-      newTaskIds.splice(destination.index, 0, draggableId);
-      data.columns.find(c => c.id === start.id).taskIds = newTaskIds
-      setCount(count => count + 1)
-      return;
-    } 
-
-    const startTaskIds = Array.from(start.taskIds);
-    startTaskIds.splice(source.index, 1);
-    data.columns.find(c => c.id === start.id).taskIds = startTaskIds
-
-    const finishTaskIds = Array.from(finish.taskIds);
-    finishTaskIds.splice(destination.index, 0, draggableId);
-    data.columns.find(c => c.id === finish.id).taskIds = finishTaskIds
-    setCount(count => count + 1)
+    updateCharacters(items);
   }
 
   return (
     <div>
+      <a onClick={() => history.push("/")}>BACK</a>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="tasks">
           {(provided) => (
-            <div 
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              Salut!
+            <div className="parent" ref={provided.innerRef}>
+              {characters.map(({id, name, thumb}, index) => {
+                return (
+                  <Draggable key={id} draggableId={id} index={index}>
+                    {(provided) => (
+                      <div className="characters-thumb" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                        <img src={thumb} alt={`${name} Thumb`} />
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
             </div>
           )}
         </Droppable>
       </DragDropContext>
-      <a onClick={() => history.push("/")}>BACK</a>
     </div>
   );
 }
