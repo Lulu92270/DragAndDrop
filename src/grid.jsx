@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import { finalSpaceCharacters } from './initial-data';
 import { useHistory } from 'react-router-dom';
 import './grid.scss';
-
+import GridItem from './gridItem';
 import RGL, { WidthProvider } from "react-grid-layout";
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -25,19 +25,30 @@ const Grid = () => {
   }
   return (
     <div>
-      <a onClick={() => history.push("/")}>BACK</a>
-      {/* {console.log(layout)} */}
+    <a onClick={() => history.push("/")}>BACK</a>
       <ReactGridLayout className="layout" layout={layout} cols={4} onLayoutChange={onLayoutChange}>
         {characters.map(({id, name, thumb}, index) => {
           return (
-            <div className="characters-thumb" key={id}>
-              <img src={thumb} alt={`${name} Thumb`} />
-            </div>
+            <GridItem id={id} name={name} thumb={thumb} key={index}/>
           );
         })}
+        {/* <CustomComponent key="20" /> */}
+        {/* <div key={index}>
+          <img src="https://res.cloudinary.com/luluengineerings/image/upload/v1616505120/LuluEng/gasEngine_uenoon.png"/>
+        </div>   */}
       </ReactGridLayout>
     </div>
   )
+}
+
+export class CustomComponent extends Component {
+  render() {
+    return (
+      <div {...this.props} className={`wrapper ${this.props.className}`}>
+        Hello
+      </div>
+    );
+  }
 }
 
 export default Grid;
