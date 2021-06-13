@@ -80,6 +80,24 @@ const App = () => {
         >
           Grid
         </div>
+        <div 
+          className="inner-div"
+          onClick={() => history.push("/responsiveGrid")}
+        >
+          Grid Responsive
+        </div>
+        <div 
+          className="inner-div"
+          onClick={() => history.push("/remove_add")}
+        >
+         RGL DEL ADD
+        </div>
+        <div 
+          className="inner-div"
+          onClick={() => history.push("/toolbox")}
+        >
+         TOOLBOX
+        </div>
       </div>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="all-columns" direction="horizontal" type="column">

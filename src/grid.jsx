@@ -9,8 +9,6 @@ const ReactGridLayout = WidthProvider(RGL);
 const Grid = () => {
   const history = useHistory();
   const [characters, updateCharacters] = useState(finalSpaceCharacters);
-  const noCols = 4;
-  const noRows = 10;
 
   let layout = [];
   for(let k = 0; k <= characters.length; k++) {
@@ -32,10 +30,6 @@ const Grid = () => {
             <GridItem id={id} name={name} thumb={thumb} key={index}/>
           );
         })}
-        {/* <CustomComponent key="20" /> */}
-        {/* <div key={index}>
-          <img src="https://res.cloudinary.com/luluengineerings/image/upload/v1616505120/LuluEng/gasEngine_uenoon.png"/>
-        </div>   */}
       </ReactGridLayout>
     </div>
   )
